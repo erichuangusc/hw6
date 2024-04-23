@@ -11,6 +11,8 @@
 
 #include "boggle.h"
 
+using namespace std;
+
 std::vector<std::vector<char> > genBoard(unsigned int n, int seed)
 {
 	//random number generator
@@ -94,6 +96,24 @@ std::set<std::string> boggle(const std::set<std::string>& dict, const std::set<s
 bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board, 
 								   std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
 {
-//add your solution here!
-
+  //add your solution here!
+  if (c >= board.size() || r >= board.size()) return false;
+  word += board[r][c];
+  
+  if (dict.find(word) != dict.end()) {
+    if (prefix.find(word) != prefix.end()) {
+    	if (boggleHelper(dict, prefix, board, word, result, r + dr, c + dc, dr, dc)) {
+				return true;
+			}
+			else {
+				result.insert(word);
+				return true;
+			}
+    }
+    else {
+			result.insert(word);
+			return true;
+		}
+  }
+	return (boggleHelper(dict, prefix, board, word, result, r + dr, c + dc, dr, dc));
 }
