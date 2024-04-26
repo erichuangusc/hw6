@@ -312,10 +312,8 @@ HashTable<K,V,Prober,Hash,KEqual>::HashTable(
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 HashTable<K,V,Prober,Hash,KEqual>::~HashTable()
 {
-    for (unsigned int i = 0; i < table_.size(); ++i) {
-        if(table_[i]) {
-            if (!(table_[i]->deleted)) delete table_[i];
-        }
+    for (auto elem : table_) {
+        delete elem;
     }
 }
 
